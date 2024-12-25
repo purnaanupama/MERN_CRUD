@@ -38,7 +38,7 @@ sequelize
     console.error('Error syncing database:', err);
   });
 
-app.use('/api/customer-data',customerRouter);
+app.use('/api/customer',customerRouter);
 
 app.use(errorMiddleware);
 

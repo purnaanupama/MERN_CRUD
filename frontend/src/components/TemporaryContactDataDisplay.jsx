@@ -1,6 +1,7 @@
 import React from 'react'
 
 const TemporaryContactDataDisplay = ({data}) => {
+
     const tableStyle = {
         width: '100%',
         borderCollapse: 'collapse',
@@ -10,6 +11,7 @@ const TemporaryContactDataDisplay = ({data}) => {
       const thStyle = {
         padding: '10px',
         backgroundColor: '#f2f2f2',
+        fontWeight:600,
         textAlign: 'left',
         borderBottom: '2px solid #ddd',
       };
@@ -31,19 +33,32 @@ const TemporaryContactDataDisplay = ({data}) => {
           <table style={tableStyle}>
             <thead>
               <tr>
-                <th style={thStyle}>NIC</th>
-                <th style={thStyle}>Contact Numbers</th>
-                <th style={thStyle}>Email</th>
+                <th style={thStyle}>Data Type</th>
+                <th style={thStyle}>Data</th>
               </tr>
             </thead>
             <tbody>
                     {
                         data && 
-                        <tr>
+                        <>
+                         <tr>
+                        <td style={thStyle}>NIC</td>
                         <td style={tdStyle}>{data.nic}</td>
-                        <td style={tdStyle}>{data.mobiles?.map((mobile) => mobile.mobile).join(',')}</td>
+                        </tr>
+                        <tr>
+                        <td style={thStyle}>Mobile</td>
+                        <td style={tdStyle}>{data.mobile}</td>
+                        </tr>
+                        <tr>
+                        <td style={thStyle}>Email</td>
                         <td style={tdStyle}>{data.email}</td>
                         </tr>
+                        <tr>
+                        <td style={thStyle}>Website</td>
+                        <td style={tdStyle}>{data.website}</td>
+                        </tr>
+                        </>
+                       
                     }
             </tbody>
           </table>

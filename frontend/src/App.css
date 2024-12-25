@@ -1,5 +1,3 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* General Reset */
 body {
@@ -10,18 +8,10 @@ body {
   color: #333;
 }
 
-
-/* toastStyles.css */
-.custom-toast {
-  font-family: 'Poppins', sans-serif; /* Change this to your desired font */
-  font-size: 16px; /* Adjust font size as needed */
-  color: #333; /* Adjust font color as needed */
-}
-
 /* App Container */
 .App {
   margin: 20px auto;
-  padding: 40px;
+  padding: 20px;
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -35,17 +25,17 @@ h1 {
 
 /* Form */
 .customer-form {
-  width: 60vw;
+  width: 50vw;
+  height: '100%';
   display: flex;
   border-right: 1px solid #ccc;
   padding-right: 20px;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 10px;
 }
 
 .customer-form2{
-  width: 40vw;
+  width: 50vw;
   flex-direction: column;
   padding: 20px;
   display: flex;
@@ -53,8 +43,7 @@ h1 {
 }
 
  input,
- select,
- button {
+ select {
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -67,25 +56,25 @@ input[type="radio"] {
 
 label {
   font-size: 14px;
-  margin-bottom: 5px;
 }
 
- .error {
+.error {
   color: red;
   font-size: 12px;
-  margin-top:7px;
+  margin-top:0px;
 }
 
-
- button {
+.btn_function{
   background-color: #007bff;
+  font-family: "Poppins", serif;
+  float: right;
   color: #fff;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
- button:hover {
+.btn_function:hover {
   background-color: #0056b3;
 }
 

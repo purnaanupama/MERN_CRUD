@@ -1,92 +1,55 @@
-import React, { useState } from 'react';
-import '../css/customer-table.css';
-import CustomerDetailsPopup from './CustomerDetailsPopup'; 
+import React from 'react';
 
-const CustomerTable = ({ customers, onEdit, onDelete }) => {
-  const [selectedCustomer,setSelectedCustomer] = useState(null); 
-  const [isPopupOpen,setIsPopupOpen] = useState(false); 
-  const [searchQuery,setSearchQuery] = useState(''); 
-  
-  const handleView = (customer) => {
-    setSelectedCustomer(customer); 
-    setIsPopupOpen(true); 
+const ContactTable = ({ customers }) => {
+  const tableStyle = {
+    width: '100%',
+    borderCollapse: 'collapse',
+    marginTop: '20px',
   };
 
-  const closePopup = () => {
-    setIsPopupOpen(false); 
-    setSelectedCustomer(null); 
+  const thStyle = {
+    padding: '10px',
+    backgroundColor: '#f2f2f2',
+    textAlign: 'left',
+    borderBottom: '2px solid #ddd',
   };
 
-  const handleEdit = (customer) => {
-    setSelectedCustomer(customer);
-    onEdit(customer); 
-    
-    // Scroll to top of the page when Edit is clicked
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', 
-    });
+  const tdStyle = {
+    padding: '10px',
+    borderBottom: '1px solid #ddd',
   };
 
-  const filteredCustomers = customers.filter((customer) =>
-    customer.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const headerStyle = {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  };
 
   return (
     <div>
-      {/* Search input */}
-      <h3 style={{borderCollapse:"collapse",marginTop: '20px', width: '100%',}}>Customer Information</h3>
-      <div className="search-container">
-        <input
-          style={{padding:10}}
-          type="text"
-          className="search-input"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} 
-        />
-      </div>
-   
-      <table className="customer-table">
+      <h3 style={headerStyle}>Contact Information</h3>
+      <table style={tableStyle}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>NIC</th>
-            <th>Mobile</th>
-            <th>Type</th>
-            <th>Credit Eligibility</th>
-            <th>Premium Customer</th>
-            <th>Actions</th>
+            <th style={thStyle}>Name</th>
+            <th style={thStyle}>Contact Number</th>
+            <th style={thStyle}>Email Address</th>
+            <th style={thStyle}>Website</th>
           </tr>
         </thead>
         <tbody>
-          {filteredCustomers?.map((customer) => (
+          {customers?.map((customer) => (
             <tr key={customer.cus_id}>
-              <td>{customer.name}</td>
-              <td>{customer.nic}</td>
-              <td>{customer.mobiles?.map((mobile) => mobile.mobile).join(', ')}</td>
-              <td>{customer.type}</td>
-              <td>{customer.eligible_for_credit ? 'Yes' : 'No'}</td>
-              <td>{customer.premium_customer ? 'Yes' : 'No'}</td>
-              <td>
-                <button onClick={() => handleEdit(customer)}>Edit</button>
-                <button onClick={() => onDelete(customer.cus_id)}>Delete</button>
-                <button onClick={() => handleView(customer)}>View</button> {/* View button */}
-              </td>
+              <td style={tdStyle}>{customer.name}</td>
+              <td style={tdStyle}>{customer.contact.map((item=>item.mobile))}</td>
+              <td style={tdStyle}>{customer.contact.map((item=>item.email))}</td>
+              <td style={tdStyle}>{customer.contact.map((item=>item.website))}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {/* Popup component */}
-      {isPopupOpen && (
-        <CustomerDetailsPopup
-          customer={selectedCustomer} 
-          onClose={closePopup} 
-        />
-      )}
     </div>
   );
 };
 
-export default CustomerTable;
+export default ContactTable;

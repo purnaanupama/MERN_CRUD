@@ -1,14 +1,14 @@
 import Customer from '../model/customerDetails.js';
-import CustomerMobile from '../model/customerMobile.js';
+import CustomerContact from '../model/customerContact.js';
 
 const getAllCustomers = async (req, res) => {
   try {
     const customers = await Customer.findAll({
       include: [
         {
-          model: CustomerMobile,
-          as: 'mobiles', 
-          attributes: ['mobile'], 
+          model: CustomerContact,
+          as: 'contact', 
+          attributes: ['mobile','email','website'], 
         },
       ],
     });

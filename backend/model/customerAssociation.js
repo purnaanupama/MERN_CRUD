@@ -1,14 +1,14 @@
 // associations.js
 import Customer from './customerDetails.js';
-import CustomerMobile from './customerMobile.js';
+import CustomerContact from './customerContact.js';
 
 export const defineAssociations = () => {
-  Customer.hasMany(CustomerMobile, {
+  Customer.hasMany(CustomerContact, {
     foreignKey: 'customer_id',
-    as: 'mobiles',
+    as: 'contact',
   });
 
-  CustomerMobile.belongsTo(Customer, {
+  CustomerContact.belongsTo(Customer, {
     foreignKey: 'customer_id',
     as: 'customer',
   });

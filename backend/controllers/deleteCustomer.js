@@ -1,5 +1,5 @@
 import Customer from '../model/customerDetails.js';
-import CustomerMobile from '../model/customerMobile.js';
+import CustomerContact from '../model/customerContact.js';
 
 const deleteCustomer = async (req, res) => {
   const { id } = req.params; 
@@ -10,8 +10,8 @@ const deleteCustomer = async (req, res) => {
       const customer = await Customer.findOne({
         where: { cus_id: id },
         include: {
-          model: CustomerMobile,
-          as: 'mobiles', 
+          model: CustomerContact,
+          as: 'contact', 
         },
         transaction, 
       });
@@ -20,7 +20,7 @@ const deleteCustomer = async (req, res) => {
           message: 'Customer not found',
         });
       }
-      await CustomerMobile.destroy({
+      await CustomerContact.destroy({
         where: { customer_id: customer.cus_id },
         transaction, 
       });

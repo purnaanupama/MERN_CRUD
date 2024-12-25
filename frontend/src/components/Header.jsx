@@ -2,13 +2,15 @@ import React from 'react';
 
 const Header = () => {
   const headerStyle = {
-    width: '100%',
-    backgroundColor: '#4CAF50', // A green background color
+    backgroundColor: '#24345a', // A green background color
     color: 'white',
-    padding: '10px 20px',
+    padding: '10px 30px',
     textAlign: 'center',
     fontSize: '24px',
     fontWeight: 'bold',
+    height:'60px',
+    display:'flex',
+    alignItems:'center'
   };
 
   return (

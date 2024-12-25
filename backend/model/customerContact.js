@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/dbConfig.js'; // Your Sequelize instance
 import Customer from './customerDetails.js'; // Import Customer model
 
-const CustomerMobile = sequelize.define('CustomerMobile', {
+const CustomerMobile = sequelize.define('CustomerContact', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -20,8 +20,16 @@ const CustomerMobile = sequelize.define('CustomerMobile', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  website: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 }, {
-  tableName: 'customer_mobile',
+  tableName: 'customer_contact',
   timestamps: true, // Automatically add createdAt and updatedAt
 });
 

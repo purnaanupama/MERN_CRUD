@@ -1,5 +1,5 @@
 import express from 'express';
-import  addCustomer  from '../controllers/addCustomer.js';
+import addCustomer  from '../controllers/addCustomer.js';
 import updateCustomer from '../controllers/updateCustomer.js';
 import getAllCustomers from '../controllers/getCustomers.js';
 import deleteCustomer from '../controllers/deleteCustomer.js';
