@@ -2,7 +2,7 @@ import Customer from '../model/customerDetails.js';
 import CustomerContact from '../model/customerContact.js';
 
 const updateCustomer = async (req, res) => {
-  const { id } = req.params; // Assuming the customer ID is passed in the URL
+  const { id } = req.params; 
   const { name, nic, gender, mobile, email, website, type, eligible_for_credit, credit_amount, credit_period, premium_customer, discount_rate } = req.body;
 
   const transaction = await Customer.sequelize.transaction();
@@ -19,17 +19,15 @@ const updateCustomer = async (req, res) => {
      await customer.update(
       { name, nic, gender, type, eligible_for_credit, credit_amount, credit_period, premium_customer, discount_rate },{ transaction });
 
-    // First, delete existing mobiles for this customer
+    // First, delete existing contact data
     await CustomerContact.destroy({
       where: { customer_id: customer.cus_id },
       transaction,
     });
-    // Then, add the new mobiles
-
+   //add contact data
     const contact = await CustomerContact.create(
-        { customer_id: customer.cus_id, mobile: mobile, website: website, email:email }, { transaction } )
+        { customer_id: customer.cus_id, mobile: mobile, website: website, email:email },{ transaction } )
 
-    // Commit the transaction
     await transaction.commit();
 
     res.status(200).json({
@@ -38,7 +36,7 @@ const updateCustomer = async (req, res) => {
       contact 
     });
   } catch (error) {
-    // Rollback the transaction if something goes wrong
+    // Rollback the transaction 
     await transaction.rollback();
     res.status(500).json({
       message: 'Error updating customer',

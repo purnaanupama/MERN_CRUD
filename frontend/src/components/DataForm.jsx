@@ -8,22 +8,28 @@ import '../css/custom_toast.css';
 import { MdAddCircle } from "react-icons/md";
 import TemporaryContactDataDisplay from './TemporaryContactDataDisplay';
 
+
 const DataForm = () => {
     const [period, setPeriod] = useState("");
     const [periodType, setPeriodType] = useState("");
+    const [periodTypeDB, setPeriodTypeDB] = useState("");
     const [data,setData]=useState({})
-    const [customerData, setCustomerData] = useState({cus_id: '',name: '',nic: '',gender: 'Male',website:'',email:'',mobile: '',eligible_for_credit: false,credit_amount: '',credit_period: '',customer: false,discount_rate: '', type: 'Regular'});
+    const [customerData, setCustomerData] = useState({cus_id:'',name:'',nic:'',gender:'Male',website:'',email:'',mobile: '',eligible_for_credit: false,credit_amount: '',credit_period: '',customer:false,discount_rate:'', type:'Regular'});
     const [customers, setCustomers] = useState([]);
     const [errors, setErrors] = useState({});
+    const [dropdownType,setDropdrownType] = useState([])
+
     const getContact =()=>{
       setData(customerData)
     }
     useEffect(() => {
       fetchCustomers();
-    }, []);
+      fetchDropDrownType();
+      fetchPeriodType();
+    },[]);
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/customer/customer');
+        const response = await fetch('http://localhost:3000/api/customer');
         const data = await response.json();
         setCustomers(data.customers);
         console.log(data.customers);
@@ -31,6 +37,29 @@ const DataForm = () => {
         console.error('Error fetching customers:', error);
       }
     };
+
+
+    const fetchDropDrownType = async() =>{
+      try {
+        const response = await fetch('http://localhost:3000/api/dropdown');
+        const data = await response.json();
+        setDropdrownType(data.type)
+        console.log(data.type);
+      } catch (error) {
+        console.log(error); 
+      }
+    }
+
+    const fetchPeriodType = async() =>{
+      try {
+        const response = await fetch('http://localhost:3000/api/dropdown/period');
+        const data = await response.json();
+        setPeriodTypeDB(data.type)
+        console.log(data.type);
+      } catch (error) {
+        console.log(error); 
+      }
+    }
     const handleChange = (e) => {
       const { name, value } = e.target;
       setCustomerData((prevData) => ({
@@ -83,8 +112,8 @@ const DataForm = () => {
       
       const method = customerData.cus_id ? 'PUT' : 'POST';
       const url = customerData.cus_id
-        ? `http://localhost:3000/api/customer/customer/${customerData.cus_id}`
-        : 'http://localhost:3000/api/customer/customer';
+        ? `http://localhost:3000/api/customer/${customerData.cus_id}`
+        : 'http://localhost:3000/api/customer';
   
       try {
         const response = await fetch(url, {
@@ -117,7 +146,7 @@ const DataForm = () => {
   
     const handleDelete = async (cus_id) => {
       try {
-        await fetch(`http://localhost:3000/api/customer/customer/${cus_id}`, {
+        await fetch(`http://localhost:3000/api/customer/${cus_id}`, {
           method: 'DELETE',
         });
         fetchCustomers();
@@ -130,7 +159,6 @@ const DataForm = () => {
       const [creditPeriod, creditType] = customer.credit_period.split(' ');
       setPeriod(creditPeriod);
       setPeriodType(creditType);
-    
       const contact = customer.contact[0] || {}; // Get the first contact or an empty object
       setCustomerData({
         cus_id: customer.cus_id,
@@ -184,17 +212,17 @@ const DataForm = () => {
         </div>
 
         {customerData.eligible_for_credit && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', gap: 10,flexDirection:'column' }}>
             <label>
               Credit Amount&nbsp;&nbsp;&nbsp;
               <input type="number" style={{fontFamily:"Poppins"}} name="credit_amount" placeholder="Credit Amount" value={customerData.credit_amount} onChange={handleChange}/>
             </label>
-            <label>
+            <label style={{display:'flex',backgroundColor:'white', width:400}}>
               Credit Period&nbsp;&nbsp;&nbsp;
               <select name="periodType" style={{fontFamily:"Poppins"}} value={periodType} onChange={(e) => setPeriodType(e.target.value)}>
-                <option value="Years">Years</option>
-                <option value="Months">Months</option>
-                <option value="Days">Days</option>
+                {periodTypeDB && periodTypeDB.map((item)=>
+                   <option value={item.period_type}>{item.period_type}</option>
+                )}
               </select>
               <input style={{ width: 50, marginLeft: 10, fontFamily:"Poppins" }} type="number" name="period" value={period} onChange={(e) => setPeriod(e.target.value)}
               />
@@ -216,8 +244,9 @@ const DataForm = () => {
           <label style={{fontSize:16}}>
             Customer Type&nbsp;&nbsp;&nbsp; 
             <select name="type" style={{fontFamily:"Poppins"}} value={customerData.type} onChange={handleChange} >
-              <option value="Regular">Regular</option>
-              <option value="Premium">Premium</option>
+            {dropdownType && dropdownType.map((item)=>
+               <option value={item.type}>{item.type}</option>
+            )}
             </select>
           </label>
         </div>
@@ -226,7 +255,6 @@ const DataForm = () => {
         <button type="button" className='btn_function' onClick={clearForm}>Clear Form</button>
         </div>
       </form>
-
       {/*contact form*/}
       <form className="customer-form2">
         <h3>Add Customer Contact</h3>
@@ -242,10 +270,11 @@ const DataForm = () => {
         <TemporaryContactDataDisplay data={data} getData={getContact}/>
       </form>
     </div>
-    <CustomerTable customers={customers} onEdit={handleEdit} onDelete={handleDelete}/>
+    <CustomerTable customers={customers} onEdit={handleEdit} onDelete={handleDelete} errors={errors}/>
     <ContactTable customers={customers}/>
   </div>
   )
 }
 
 export default DataForm
+

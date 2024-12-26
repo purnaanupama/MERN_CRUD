@@ -5,7 +5,7 @@ import cors from 'cors';
 import customerRouter from './routes/customerRoutes.js'
 import { defineAssociations } from './model/customerAssociation.js';
 import errorMiddleware from './middleware/errorHandler.js';
-
+import dropdownRouter from './routes/dropdownDataRoutes.js'
 
 dotenv.config();
 
@@ -39,6 +39,7 @@ sequelize
   });
 
 app.use('/api/customer',customerRouter);
+app.use('/api/dropdown',dropdownRouter);
 
 app.use(errorMiddleware);
 

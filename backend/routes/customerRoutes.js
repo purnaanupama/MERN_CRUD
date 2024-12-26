@@ -8,8 +8,8 @@ import deleteCustomer from '../controllers/deleteCustomer.js';
 
 const router = express.Router();
 
-router.post('/customer',addCustomer);
-router.put('/customer/:id',updateCustomer);
-router.get('/customer',getAllCustomers);
-router.delete('/customer/:id',deleteCustomer);
+router.post('/',addCustomer);
+router.put('/:id',updateCustomer);
+router.get('/',getAllCustomers);
+router.delete('/:id',deleteCustomer);
 export default router;

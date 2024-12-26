@@ -18,7 +18,7 @@ const CustomerTable = ({ customers, onEdit, onDelete }) => {
   };
   const handleEdit = (customer) => {
     setSelectedCustomer(customer);
-    onEdit(customer); 
+    onEdit(customer);
   // Scroll to top of the page when Edit is clicked
     window.scrollTo({
       top: 0,
@@ -26,7 +26,7 @@ const CustomerTable = ({ customers, onEdit, onDelete }) => {
     });
   };
   const filteredCustomers = customers?.filter((customer) =>
-    customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+    customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||  customer.nic.includes(searchQuery)
   );
   return (
     <div>
@@ -37,11 +37,18 @@ const CustomerTable = ({ customers, onEdit, onDelete }) => {
           type="text"
           style={{padding:10,fontFamily:"Poppins", width:'500px'}}
           className="search-input"
-          placeholder="Search by name..."
+          placeholder="Search customer..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)} 
         />
       <FiSearch style={{position:'absolute',top:13,right:0,fontSize:20}} />
+      {/* <label style={{fontSize:16}}>
+            Customer Type&nbsp;&nbsp;&nbsp; 
+            <select name="type" style={{fontFamily:"Poppins"}} value={customerData.type} onChange={handleChange} >
+              <option value="Regular">Regular</option>
+              <option value="Premium">Premium</option>
+            </select>
+      </label> */}
       </div>
    
       <table className="customer-table">
